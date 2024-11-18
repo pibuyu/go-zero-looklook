@@ -70,7 +70,7 @@ message GetUserAuthByUserIdReq {
 message GetUserAuthyUserIdResp {
    UserAuth userAuth = 1;
 }
-
+//生成token
 message GenerateTokenReq {
   int64 userId = 1;
 }
@@ -78,6 +78,19 @@ message GenerateTokenResp {
   string accessToken = 1;
   int64  accessExpire = 2;
   int64  refreshAfter = 3;
+}
+//更新用户信息
+message UpdateUserInfoReq {
+  int64  userId = 1;
+  string nickname = 2;
+  string mobile = 3;
+  string password=4;
+  int32 sex=5;
+  string avatar=6;
+  string info=7;
+}
+message UpdateUserInfoResp {
+  int64  effectedRows=1;
 }
 
 //service
@@ -88,4 +101,9 @@ service usercenter {
   rpc getUserAuthByAuthKey(GetUserAuthByAuthKeyReq) returns(GetUserAuthByAuthKeyResp);
   rpc getUserAuthByUserId(GetUserAuthByUserIdReq) returns(GetUserAuthyUserIdResp);
   rpc generateToken(GenerateTokenReq) returns(GenerateTokenResp);
+  rpc updateUserInfo(UpdateUserInfoReq) returns(UpdateUserInfoResp);
 }
+
+//改这里不要忘记了该user.api文件，不把请求接受的字段传递过来，接受不到
+//在rpc/pb目录下执行：
+//  goctl rpc protoc usercenter.proto --go_out=../ --go-grpc_out=../  --zrpc_out=../

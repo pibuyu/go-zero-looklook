@@ -60,3 +60,21 @@ type (
 		UserInfo User `json:"userInfo"`
 	}
 )
+
+type(
+	UpdateUserInfoReq{
+		UserId int64 `json:"userId"`
+		Mobile string	`json:"mobile"`
+		Nickname string `json:"nickname"`
+		Info string	`json:"info"`
+		Password string	 `json:"password"`
+		Sex int32 `json:"sex"`
+		Avatar	 string	`json:"avatar"`
+	}
+	UpdateUserInfoResp{
+		EffectedRows int `json:"effectedRows"`
+	}
+)
+
+//在api/desc目录下执行：
+//	goctl api go -api usercenter.api -dir ../  -style=goZero

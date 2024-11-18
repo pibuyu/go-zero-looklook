@@ -2,7 +2,6 @@ package logic
 
 import (
 	"context"
-
 	"looklook/app/usercenter/cmd/rpc/internal/svc"
 	"looklook/app/usercenter/cmd/rpc/pb"
 	"looklook/app/usercenter/cmd/rpc/usercenter"
@@ -31,8 +30,10 @@ func NewGetUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetUs
 }
 
 func (l *GetUserInfoLogic) GetUserInfo(in *pb.GetUserInfoReq) (*pb.GetUserInfoResp, error) {
+	//todo:This is a special comment.这里定义User结构体的时候没有重写TableName函数，自动映射表名称出了问题，查询的时候显式指定表名即可
+	user := &model.User{}
+	err := l.svcCtx.DB.Table("user").Debug().Find(&user, "id=?", in.Id).Error
 
-	user, err := l.svcCtx.UserModel.FindOne(l.ctx,in.Id)
 	if err != nil && err != model.ErrNotFound {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "GetUserInfo find user db err , id:%d , err:%v", in.Id, err)
 	}
