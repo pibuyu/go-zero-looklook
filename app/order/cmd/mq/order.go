@@ -17,11 +17,12 @@ func main() {
 
 	conf.MustLoad(*configFile, &c)
 
-	// log、prometheus、trace、metricsUrl.
+	// SetUp里包含了log、prometheus、trace、metricsUrl.
 	if err := c.SetUp(); err != nil {
 		panic(err)
 	}
 
+	//只要服务实现了start和stop接口，都可以放在serviceGroup统一管理
 	serviceGroup := service.NewServiceGroup()
 	defer serviceGroup.Stop()
 

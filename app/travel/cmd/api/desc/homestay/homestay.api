@@ -62,3 +62,27 @@ type (
 		Homestay Homestay `json:"homestay"`
 	}
 )
+
+type(
+	HomestayInsertReq{
+		Version int64 `json:"version"`
+		Title string	`json:"title"`
+		SubTitle *string `json:"subTitle"`
+		Banner *string	`json:"banner"`
+		Info	*string	`json:"info"`
+		PeopleNum int64 `json:"peopleNum"`
+		HomestayBusinessId int64 `json:"homestayBusinessId"`
+		UserId int64 `json:"userId"`
+		RowState int64 `json:"rowState"`
+		RowType int64 `json:"rowType"`
+		FoodInfo *string `json:"foodInfo"`
+		FoodPrice int64 `json:"foodPrice"`
+		HomestayPrice int64 `json:"homestayPrice"`
+		MarketHomestayPrice int64 `json:"marketHomestayPrice"`
+	}
+	HomestayInsertResp{
+		code int `json:"code"`
+	}
+)
+
+//goctl api go -api travel.api -dir ../  -style=goZero

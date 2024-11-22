@@ -41,19 +41,25 @@ func (l *HomestayListLogic) HomestayList(req types.HomestayListReq) (*types.Home
 	}
 
 	var resp []types.Homestay
+	//并发封装结果
 	if len(homestayActivityList) > 0 { // mapreduce example
 		mr.MapReduceVoid(func(source chan<- interface{}) {
+			//将dataId传入source管道里，作为每个任务的输入
 			for _, homestayActivity := range homestayActivityList {
 				source <- homestayActivity.DataId
 			}
 		}, func(item interface{}, writer mr.Writer[*model.Homestay], cancel func(error)) {
+			//这里的item就是上一步传进来的dataId
 			id := item.(int64)
 
+			//这里用findOne而不用findList，是因为findOne有db cache，有自动缓存管理。
+			//缓存失效的时候也有singleflight，只允许一个线程查询数据库。
 			homestay, err := l.svcCtx.HomestayModel.FindOne(l.ctx, id)
 			if err != nil && err != model.ErrNotFound {
 				logx.WithContext(l.ctx).Errorf("ActivityHomestayListLogic ActivityHomestayList 获取活动数据失败 id : %d ,err : %v", id, err)
 				return
 			}
+			//查询成功则将这个homestay对象写入writer 管道，交给下游处理
 			writer.Write(homestay)
 		}, func(pipe <-chan *model.Homestay, cancel func(error)) {
 

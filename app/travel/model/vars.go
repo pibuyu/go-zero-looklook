@@ -17,3 +17,8 @@ var HomestayActivityGoodBusiType = "goodBusiness"       //最佳房东
 
 var HomestayActivityDownStatus int64 = 0 //下架
 var HomestayActivityUpStatus int64 = 1   //上架
+
+// 民俗评论类型.todo:This is a special comment.注释和变量不能挨在一起，不然识别不到，不知道是为啥
+
+var HomestayCommentExistStatus int64 = 0   //未删除
+var HomestayCommentDeletedStatus int64 = 1 //已删除

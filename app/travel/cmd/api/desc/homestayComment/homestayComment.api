@@ -21,9 +21,21 @@ type HomestayComment {
 type (
 	CommentListReq {
        lastId  int64 `json:"lastId"`
+	   pageNo   int64 `json:"pageNo"`
        pageSize  int64 `json:"pageSize"`
 	}
 	CommentListResp {
 		List []HomestayComment `json:"list"`
+	}
+)
+
+type(
+	CommentInsertReq{
+		HomestayId int64 `json:"homestayId"`
+		Content string `json:"content"`
+		Star float64 `json:"star"`
+	}
+	CommentInsertResp{
+		Code int64 `json:"code"`
 	}
 )

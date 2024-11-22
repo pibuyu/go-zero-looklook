@@ -40,3 +40,5 @@ service travel {
     //homestayDetail
     rpc homestayDetail(HomestayDetailReq) returns(HomestayDetailResp);
 }
+
+//goctl rpc protoc travel.proto --go_out=../ --go-grpc_out=../  --zrpc_out=../

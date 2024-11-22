@@ -29,6 +29,7 @@ func NewUpdateUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Up
 }
 
 func (l *UpdateUserInfoLogic) UpdateUserInfo(req *types.UpdateUserInfoReq) (*types.UpdateUserInfoResp, error) {
+	//todo:This is a special comment.从l.ctx里获取userId
 	userId := ctxdata.GetUidFromCtx(l.ctx)
 	result, err := l.svcCtx.UsercenterRpc.UpdateUserInfo(l.ctx, &usercenter.UpdateUserInfoReq{
 		UserId:   userId,

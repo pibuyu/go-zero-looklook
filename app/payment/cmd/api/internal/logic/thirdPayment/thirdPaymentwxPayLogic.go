@@ -87,7 +87,7 @@ func (l *ThirdPaymentwxPayLogic) createWxPrePayOrder(serviceType, orderSn string
 	}
 	openId := userResp.UserAuth.AuthKey
 
-	// 2、create local third payment record
+	// 2、create local third payment record 本地的支付流水单号
 	createPaymentResp, err := l.svcCtx.PaymentRpc.CreatePayment(l.ctx, &payment.CreatePaymentReq{
 		UserId:      userId,
 		PayModel:    model.ThirdPaymentPayModelWechatPay,
@@ -101,8 +101,7 @@ func (l *ThirdPaymentwxPayLogic) createWxPrePayOrder(serviceType, orderSn string
 			err, userId, totalPrice, orderSn)
 	}
 
-	// 3、create wechat pay pre pay order
-
+	// 3、create wechat pay pre-pay order
 	wxPayClient, err := svc.NewWxPayClientV3(l.svcCtx.Config)
 	if err != nil {
 		return nil, err
